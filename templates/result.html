@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Search Results</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(to right, #cfe9f8, #fbe9e7);
+            padding: 40px;
+            margin: 0;
+        }
+
+        h2 {
+            text-align: center;
+            color: #1E3A8A;
+            font-size: 2.5rem;
+            margin-bottom: 40px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+
+        .destination-item {
+            background: white;
+            padding: 25px;
+            margin-bottom: 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .destination-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .highlight-paris {
+            background-color: #fff3cd;
+            border-left: 6px solid #ff9800;
+            padding: 25px;
+            margin-bottom: 40px;
+            border-radius: 15px;
+            box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+        }
+
+        .highlight-paris img {
+            max-width: 320px;
+            border-radius: 12px;
+            margin-top: 10px;
+        }
+
+        h3 {
+            margin-top: 0;
+            color: #333;
+        }
+
+        a {
+            color: #1E88E5;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .no-results {
+            text-align: center;
+            color: #c00;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 50px;
+            font-size: 1.1rem;
+        }
+
+        img {
+            margin-top: 10px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+    </style>
+</head>
+<body>
+
+<h2>🌍 Explore the Best Destinations Matching Your Search</h2>
+
+<!-- If France, show Paris highlight -->
+<div th:if="${#strings.toLowerCase(country) == 'france'}" class="highlight-paris">
+    <h3>✨ Special Highlight: Paris 🇫🇷</h3>
+    <div>
+        <p><strong>City:</strong> Paris</p>
+        <img src="/images/paris.jpg" alt="Paris" onerror="this.src='/images/paris.jpeg'; if (!this.src.includes('jpeg')) this.src='/images/default.jpg'"/>
+        <p><a href="https://maps.google.com/maps?q=Paris,France" target="_blank">📍 View Paris on Google Maps</a></p>
+    </div>
+</div>
+
+<!-- No destinations found -->
+<div th:if="${destinations == null || destinations.empty}" class="no-results">
+    <p>⚠️ No destinations found matching your criteria.</p>
+</div>
+
+<!-- List of matched destinations -->
+<div th:each="dest : ${destinations}" class="destination-item">
+    <h3 th:text="${dest.city.name} + ' (' + ${dest.days} + ' days)'"></h3>
+    <p>📌 Country: <span th:text="${dest.city.country.name}"></span></p>
+    <p>💰 Cost: $<span th:text="${dest.cost}"></span></p>
+    <p>🕒 Days: <span th:text="${dest.days}"></span></p>
+    <img th:src="@{'/images/' + ${dest.imagePath}}"
+         alt="Image of [[${dest.city.name}]]"
+         width="250"
+         onerror="this.src='/images/default.jpg'" />
+    <p><a th:href="${dest.mapLink}" target="_blank">📍 View on Map</a></p>
+</div>
+
+<!-- Back link -->
+<p class="back-link"><a href="/">🔙 Back to Search</a></p>
+
+</body>
+</html>

@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Welcome to Travel Management Suite</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Montserrat', 'Segoe UI', sans-serif;
+            color: #681a1a;
+            overflow-x: hidden;
+             
+        }
+        
+        .hero {
+            height: 100vh;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 100%);
+            z-index: 1;
+        }
+        
+        .hero-slider {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+        
+        .hero-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            opacity: 0;
+            transition: opacity 1.5s ease-in-out;
+        }
+        
+        .hero-slide.active {
+            opacity: 1;
+        }
+        
+        .slide-1 {
+            background-image: url("/api/placeholder/1920/1080");
+        }
+        
+        .slide-2 {
+            background-image: url("/api/placeholder/1920/1080");
+        }
+        
+        .slide-3 {
+            background-image: url("/api/placeholder/1920/1080");
+        }
+        
+        .navbar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 3;
+        }
+        
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo i {
+            margin-right: 10px;
+            font-size: 32px;
+            color: #ff6b6b;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            font-size: 16px;
+        }
+        
+        .nav-links a:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-3px);
+        }
+        
+        .nav-links a.signup {
+            background: #ff6b6b;
+            color: white;
+        }
+        
+        .nav-links a.signup:hover {
+            background: #ff5252;
+        }
+        
+        .hero-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            z-index: 2;
+            width: 90%;
+            max-width: 900px;
+        }
+        
+        .hero-title {
+            font-size: 4rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.3);
+        }
+        
+        .hero-subtitle {
+            font-size: 1.5rem;
+            color: white;
+            margin-bottom: 40px;
+            text-shadow: 1px 1px 4px rgba(0,0,0,0.3);
+        }
+        
+        .hero-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+        
+        .btn {
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 18px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        
+        .btn-primary {
+            background: #ff6b6b;
+            color: white;
+            border: none;
+        }
+        
+        .btn-primary:hover {
+            background: #ff5252;
+            transform: translateY(-3px);
+        }
+        
+        .btn-outline {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+        
+        .btn-outline:hover {
+            background: rgba(255,255,255,0.1);
+            transform: translateY(-3px);
+        }
+        
+        .features {
+            padding: 80px 40px;
+            background: #f8f9fa;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 60px;
+            color: #333;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .feature-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .feature-icon {
+            font-size: 3rem;
+            color: #ff6b6b;
+            margin-bottom: 20px;
+        }
+        
+        .feature-title {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: #333;
+        }
+        
+        .feature-desc {
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        .destinations {
+            padding: 80px 40px;
+            background: white;
+        }
+        
+        .destinations-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .destination-card {
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            position: relative;
+            height: 400px;
+        }
+        
+        .destination-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .destination-card:hover .destination-img {
+            transform: scale(1.1);
+        }
+        
+        .destination-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 30px;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0));
+            color: white;
+            transition: all 0.3s ease;
+        }
+        
+        .destination-name {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+        
+        .destination-info {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        .footer {
+            background: #222;
+            color: white;
+            padding: 60px 40px 30px;
+            text-align: center;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            text-align: left;
+            margin-bottom: 40px;
+        }
+        
+        .footer-column h3 {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background: #ff6b6b;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: #ff6b6b;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-links a {
+            color: white;
+            background: #444;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        
+        .social-links a:hover {
+            background: #ff6b6b;
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            border-top: 1px solid #444;
+            padding-top: 30px;
+            font-size: 0.9rem;
+            color: #aaa;
+        }
+        
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .hero-buttons {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .navbar {
+                padding: 20px;
+            }
+            
+            .logo {
+                font-size: 20px;
+            }
+            
+            .nav-links a {
+                padding: 8px 15px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="hero">
+        <div class="hero-slider">
+            <div class="hero-slide slide-1 active"></div>
+            <div class="hero-slide slide-2"></div>
+            <div class="hero-slide slide-3"></div>
+        </div>
+        
+        <div class="navbar">
+            <a href="/" class="logo">
+                <i class="fas fa-paper-plane"></i>
+                TravelSuite
+            </a>
+            <div class="nav-links">
+                <a href="/destinations">Destinations</a>
+                <a href="/packages">Packages</a>
+                <a href="/login">Login</a>
+                <a href="/signup" class="signup">Sign Up</a>
+            </div>
+        </div>
+        
+        <div class="hero-content">
+            <h1 class="hero-title">Explore the World with Us</h1>
+            <p class="hero-subtitle">Your gateway to unforgettable journeys and seamless travel management</p>
+            <div class="hero-buttons">
+                <a href="/explore" class="btn btn-primary">Explore Destinations</a>
+                <a href="/about" class="btn btn-outline">Learn More</a>
+            </div>
+        </div>
+    </div>
+    
+    <section class="features">
+        <h2 class="section-title">Why Choose Us</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <i class="fas fa-map-marked-alt feature-icon"></i>
+                <h3 class="feature-title">Curated Destinations</h3>
+                <p class="feature-desc">Discover hand-picked locations carefully selected by our travel experts for unforgettable experiences.</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-concierge-bell feature-icon"></i>
+                <h3 class="feature-title">Premium Service</h3>
+                <p class="feature-desc">Experience top-notch customer service and personalized attention throughout your journey.</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-dollar-sign feature-icon"></i>
+                <h3 class="feature-title">Best Price Guarantee</h3>
+                <p class="feature-desc">We promise the most competitive rates and value for your travel investment.</p>
+            </div>
+        </div>
+    </section>
+    
+    <section class="destinations">
+        <h2 class="section-title">Popular Destinations</h2>
+        <div class="destinations-grid">
+            <div class="destination-card">
+                <img src="images/bali.jpg" alt="Bali" class="destination-img" />
+                <div class="destination-overlay">
+                    <h3 class="destination-name">Bali, Indonesia</h3>
+                    <div class="destination-info">
+                        <span><i class="fas fa-star"></i> 4.8/5</span>
+                        <span><i class="fas fa-calendar-alt"></i> 7-10 days</span>
+                    </div>
+                </div>
+            </div>
+            <div class="destination-card">
+                <img src="images/satorini.jpg" alt="Santorini" class="destination-img" />
+                <div class="destination-overlay">
+                    <h3 class="destination-name">Santorini, Greece</h3>
+                    <div class="destination-info">
+                        <span><i class="fas fa-star"></i> 4.9/5</span>
+                        <span><i class="fas fa-calendar-alt"></i> 5-8 days</span>
+                    </div>
+                </div>
+            </div>
+            <div class="destination-card">
+                <img src="images/tokyo.jpg" alt="Tokyo" class="destination-img" />
+                <div class="destination-overlay">
+                    <h3 class="destination-name">Tokyo, Japan</h3>
+                    <div class="destination-info">
+                        <span><i class="fas fa-star"></i> 4.7/5</span>
+                        <span><i class="fas fa-calendar-alt"></i> 8-12 days</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>About Us</h3>
+                <p>Travel Management Suite is your trusted partner for exceptional travel experiences, offering personalized service and unforgettable destinations worldwide.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-pinterest"></i></a>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="/about">About Us</a></li>
+                    <li><a href="/destinations">Destinations</a></li>
+                    <li><a href="/packages">Travel Packages</a></li>
+                    <li><a href="/blog">Travel Blog</a></li>
+                    <li><a href="/contact">Contact Us</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Support</h3>
+                <ul class="footer-links">
+                    <li><a href="/faq">FAQ</a></li>
+                    <li><a href="/terms">Terms & Conditions</a></li>
+                    <li><a href="/privacy">Privacy Policy</a></li>
+                    <li><a href="/cancellation">Cancellation Policy</a></li>
+                    <li><a href="/support">Customer Support</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact Us</h3>
+                <ul class="footer-links">
+                    <li><i class="fas fa-map-marker-alt"></i> 123 Travel Street, City</li>
+                    <li><i class="fas fa-phone"></i> +1 (555) 123-4567</li>
+                    <li><i class="fas fa-envelope"></i> info@travelsuite.com</li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2025 Travel Management Suite. All rights reserved.</p>
+        </div>
+    </footer>
+    
+    <script>
+        // Simple image slider
+        const slides = document.querySelectorAll('.hero-slide');
+        let currentSlide = 0;
+        
+        function showSlide(index) {
+            slides.forEach(slide => {
+                slide.classList.remove('active');
+            });
+            
+            slides[index].classList.add('active');
+        }
+        
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % slides.length;
+            showSlide(currentSlide);
+        }
+        
+        // Change slide every 5 seconds
+        setInterval(nextSlide, 5000);
+    </script>
+</body>
+</html>

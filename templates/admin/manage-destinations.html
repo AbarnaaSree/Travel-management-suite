@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Destination Management</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', Arial, sans-serif;
+            background-color: #f2f6f9;
+            color: #4a4a4a;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 30px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin-top: 50px;
+        }
+
+        header {
+            background-color: #3b4d67;
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 18px;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .btn-primary {
+            background-color: #7f8c8d;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #95a5a6;
+            transform: translateY(-2px);
+        }
+
+        .alert {
+            background-color: #e2f7e1;
+            padding: 12px;
+            margin-bottom: 15px;
+            color: #2ecc71;
+            border-left: 5px solid #2ecc71;
+            font-weight: 500;
+        }
+
+        .table-container {
+            max-height: 60vh;
+            overflow-y: auto;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            border-radius: 8px;
+            overflow: hidden;
+            font-size: 16px;
+        }
+
+        th {
+            background-color: #3b4d67;
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        td {
+            padding: 14px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+            font-size: 14px;
+            background-color: #fafafa;
+        }
+
+        tr:nth-child(even) td {
+            background-color: #f0f0f0;
+        }
+
+        tr:hover td {
+            background-color: #ecf0f1;
+        }
+
+        .action-links a {
+            padding: 6px 12px;
+            font-size: 13px;
+            font-weight: 500;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-right: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .edit-link {
+            color: #3498db;
+            border: 1px solid #3498db;
+        }
+
+        .edit-link:hover {
+            background-color: #3498db;
+            color: white;
+        }
+
+        .delete-link {
+            color: #e74c3c;
+            border: 1px solid #e74c3c;
+        }
+
+        .delete-link:hover {
+            background-color: #e74c3c;
+            color: white;
+        }
+
+        .footer {
+            margin-top: 50px;
+            text-align: center;
+            padding: 15px;
+            font-size: 14px;
+            color: #7f8c8d;
+        }
+
+        .footer a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .footer a:hover {
+            color: #1abc9c;
+            text-decoration: underline;
+        }
+
+        .back-link {
+            margin-top: 15px;
+            font-size: 14px;
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .back-link:hover {
+            color: #1abc9c;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Destination Management</h1>
+        <a href="/admin/add-destination" class="btn btn-primary">Add New Destination</a>
+    </header>
+
+    <div th:if="${message}" class="alert">
+        <p th:text="${message}"></p>
+    </div>
+
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>City</th>
+                    <th>Country</th>
+                    <th>Cost</th>
+                    <th>Days</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="destination : ${destinations}">
+                    <td th:text="${destination.id}"></td>
+                    <td th:text="${destination.city}"></td>
+                    <td th:text="${destination.country}"></td>
+                    <td th:text="${destination.cost}"></td>
+                    <td th:text="${destination.days}"></td>
+        
+                    <td class="action-links">
+                        <a th:href="@{'/admin/edit-destination/' + ${destination.id}}" class="edit-link">Edit</a>
+                        <a th:href="@{'/admin/delete-destination/' + ${destination.id}}" 
+                           onclick="return confirm('Are you sure you want to delete this destination?');" 
+                           class="delete-link">Delete</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <a href="/admin/home" class="back-link">⬅️ Back to Admin Home</a>
+</div>
+
+<footer class="footer">
+    <p>&copy; 2025 Travel Management Suite. All Rights Reserved.</p>
+</footer>
+
+</body>
+</html>

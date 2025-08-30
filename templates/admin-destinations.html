@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Manage Destinations</title>
+</head>
+<body>
+    <h1>Admin - Manage Destinations</h1>
+    <a href="/admin/destinations/add">Add New Destination</a>
+
+    <h2>Destinations</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Country</th>
+                <th>Cost</th>
+                <th>Days</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="destination : ${destinations}">
+                <td th:text="${destination.name}"></td>
+                <td th:text="${destination.country}"></td>
+                <td th:text="${destination.cost}"></td>
+                <td th:text="${destination.days}"></td>
+                <td>
+                    <a th:href="@{/admin/destinations/edit/{id}(id=${destination.id})}">Edit</a>
+                    <a th:href="@{/admin/destinations/delete/{id}(id=${destination.id})}" onclick="return confirm('Are you sure?');">Delete</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+</body>
+</html>

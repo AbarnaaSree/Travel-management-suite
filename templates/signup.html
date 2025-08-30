@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Signup - Travel Management Suite</title>
+    <style>
+        body {
+            background: linear-gradient(135deg, #89f7fe, #66a6ff);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .signup-container {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+            width: 400px;
+        }
+
+        h2 {
+            text-align: center;
+            color: #1E3A8A;
+            margin-bottom: 30px;
+        }
+
+        input[type="text"], input[type="password"], input[type="email"] {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background: #f9f9f9;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(to right, #1E3A8A, #6DD5FA);
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: linear-gradient(to right, #152C6B, #5BC4E7);
+        }
+
+        .login-link {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+        }
+
+        .login-link a {
+            color: #1E88E5;
+            text-decoration: none;
+        }
+
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+
+        .error-message {
+            color: red;
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="signup-container">
+    <h2>📝 Signup</h2>
+
+    <!-- Display error message if signup fails -->
+    <div th:if="${error}" class="error-message" th:text="${error}"></div>
+    <div th:if="${message}" class="error-message" style="color: green;" th:text="${message}"></div>
+
+    <form th:action="@{/signup}" method="post">
+        <input type="text" name="username" placeholder="Username" required />
+        <input type="password" name="password" placeholder="Password" required />
+        <input type="email" name="email" placeholder="Email" required />
+        <button type="submit">Signup</button>
+    </form>
+
+    <div class="login-link">
+        Already have an account? <a th:href="@{/login}">Login here</a>
+    </div>
+</div>
+
+</body>
+</html>

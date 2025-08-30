@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Travel Management Suite</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #6DD5FA, #FF758C);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 0;
+            margin: 0;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            padding: 40px 0;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            color: #1E3A8A;
+            font-size: 3rem;
+            margin-bottom: 10px;
+        }
+        
+        .tagline {
+            color: #555;
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+        
+        .travel-icons {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+        }
+        
+        .icon-box {
+            background: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 15px;
+            color: #FF758C;
+            font-size: 24px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .icon-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.2);
+        }
+        
+        .search-form {
+            background-color: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        
+        .form-title {
+            color: #1E3A8A;
+            font-size: 1.5rem;
+            margin-bottom: 25px;
+            text-align: center;
+            border-bottom: 2px solid #f0f0f0;
+            padding-bottom: 15px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #444;
+            font-weight: 600;
+        }
+        
+        select, input[type="number"] {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+            font-size: 16px;
+            transition: border-color 0.3s;
+            box-sizing: border-box;
+        }
+        
+        select:focus, input[type="number"]:focus {
+            outline: none;
+            border-color: #6DD5FA;
+            box-shadow: 0 0 0 3px rgba(109, 213, 250, 0.2);
+        }
+        
+        button {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(to right, #1E3A8A, #6DD5FA);
+            color: white;
+            font-size: 18px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        button:hover {
+            background: linear-gradient(to right, #152C6B, #5BC4E7);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(30, 58, 138, 0.3);
+        }
+        
+        .error {
+            background-color: #FFE5E5;
+            color: #D00000;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: 500;
+            border-left: 4px solid #D00000;
+        }
+        
+        .destinations-preview {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin-top: 50px;
+        }
+        
+        .destination-card {
+            width: 150px;
+            height: 150px;
+            margin: 10px;
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .destination-card:hover {
+            transform: scale(1.05);
+        }
+        
+        .destination-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .destination-card .overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+            padding: 10px;
+            color: white;
+            font-weight: 600;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 20px;
+            color: #fff;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>✈️ Dream Destinations</h1>
+        <p class="tagline">Discover your perfect getaway with our travel recommendations</p>
+        
+        <div class="travel-icons">
+            <div class="icon-box"><i class="fas fa-plane"></i></div>
+            <div class="icon-box"><i class="fas fa-mountain"></i></div>
+            <div class="icon-box"><i class="fas fa-umbrella-beach"></i></div>
+            <div class="icon-box"><i class="fas fa-map-marked-alt"></i></div>
+            <div class="icon-box"><i class="fas fa-hotel"></i></div>
+        </div>
+    </header>
+    
+    <!-- Display error message if it exists -->
+    <div th:if="${error}" class="error">
+        <i class="fas fa-exclamation-circle"></i> <span th:text="${error}"></span>
+    </div>
+    
+    <div class="search-form">
+        <h2 class="form-title"><i class="fas fa-search"></i> Find Your Next Adventure</h2>
+        
+        <form action="/search" method="post">
+            <!-- Country Dropdown -->
+            <div class="form-group">
+                <label for="country"><i class="fas fa-globe-americas"></i> Destination Country:</label>
+                <select id="country" name="country" required>
+                    <option value="" disabled selected>--Select a Country--</option>
+                    <th:block th:each="country : ${countries}">
+                        <option th:value="${country}" th:text="${country}"></option>
+                    </th:block>
+                </select>
+            </div>
+            
+            <!-- Budget input -->
+            <div class="form-group">
+                <label for="cost"><i class="fas fa-wallet"></i> Your Budget (USD):</label>
+                <input type="number" id="cost" name="cost" required min="1" placeholder="Enter your maximum budget" />
+            </div>
+            
+            <!-- Days input -->
+            <div class="form-group">
+                <label for="days"><i class="fas fa-calendar-day"></i> Trip Duration (Days):</label>
+                <input type="number" id="days" name="days" required min="1" placeholder="How many days?" />
+            </div>
+            
+            <button type="submit"><i class="fas fa-paper-plane"></i> Find My Trip</button>
+        </form>
+    </div>
+    
+    <!-- Popular destinations preview -->
+    <div class="destinations-preview">
+        <div class="destination-card">
+            <img src="/images/paris.jpg" alt="Paris" onerror="this.src='/images/default.jpg'">
+            <div class="overlay">Paris</div>
+        </div>
+        <div class="destination-card">
+            <img src="/images/rome.jpg" alt="Rome" onerror="this.src='/images/default.jpg'">
+            <div class="overlay">Rome</div>
+        </div>
+        <div class="destination-card">
+            <img src="/images/new-york.jpg" alt="New York" onerror="this.src='/images/default.jpg'">
+            <div class="overlay">New York</div>
+        </div>
+        <div class="destination-card">
+            <img src="/images/tokyo.jpg" alt="Tokyo" onerror="this.src='/images/default.jpg'">
+            <div class="overlay">Tokyo</div>
+        </div>
+    </div>
+    
+    <footer>
+        <p>Travel Management Suite © 2025 | Plan your perfect journey with us</p>
+    </footer>
+</div>
+
+</body>
+</html>
