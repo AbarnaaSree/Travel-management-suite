@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Edit Destination</title>
+    <link rel="stylesheet" href="/css/styles.css" />
+</head>
+<body>
+
+<h1>Edit Destination</h1>
+
+<form action="#" th:action="@{'/admin/update-destination/' + ${destination.id}}" th:object="${destination}" method="post">
+
+    <label>City:</label>
+    <input type="text" th:field="*{city}" required/><br><br>
+
+    <label>Country:</label>
+    <input type="text" th:field="*{country}" required/><br><br>
+
+    <label>Cost:</label>
+    <input type="number" th:field="*{cost}" step="0.01" required/><br><br>
+
+    <label>Days:</label>
+    <input type="number" th:field="*{days}" required/><br><br>
+
+    <button type="submit">Update Destination</button>
+</form>
+
+<br>
+<a href="/admin/manage-destinations">⬅️ Back to Manage Destinations</a>
+
+</body>
+</html>

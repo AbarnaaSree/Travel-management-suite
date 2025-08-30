@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Edit User - Admin Panel</title>
+</head>
+<body>
+    <h1>Edit User</h1>
+    <form th:action="@{/admin/edit-user/{id}(id=${user.id})}" method="post">
+        <input type="text" name="username" th:value="${user.username}" placeholder="Username" required />
+        <input type="email" name="email" th:value="${user.email}" placeholder="Email" required />
+        <select name="role" required>
+            <option th:value="'USER'" th:text="'USER'" th:selected="${user.role == 'USER'}">User</option>
+            <option th:value="'ADMIN'" th:text="'ADMIN'" th:selected="${user.role == 'ADMIN'}">Admin</option>
+        </select>
+        <button type="submit">Update User</button>
+    </form>
+</body>
+</html>

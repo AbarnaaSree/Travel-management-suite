@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Admin Dashboard - Travel Management Suite</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #eceff1; /* Light grayish-blue background color */
+            padding: 50px;
+            text-align: center;
+            margin: 0;
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .dashboard {
+            background: #ffffff; /* White background for the dashboard */
+            padding: 40px;
+            border-radius: 20px;
+            display: inline-block;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            max-width: 600px;
+            margin: auto;
+            transition: transform 0.3s ease;
+        }
+
+        .dashboard:hover {
+            transform: scale(1.05);
+        }
+
+        h1 {
+            color: #4a148c;
+            font-size: 2.8rem;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        p {
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+
+        strong {
+            color: #6a1b9a;
+        }
+
+        .manage-buttons {
+            margin-top: 30px;
+        }
+
+        .manage-buttons a {
+            display: inline-block;
+            margin: 15px;
+            padding: 15px 30px;
+            background: linear-gradient(to right, #7b4397, #dc2430); /* purple to coral */
+            color: white;
+            border-radius: 12px;
+            text-decoration: none;
+            font-size: 18px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: background 0.3s ease, transform 0.2s ease;
+        }
+
+        .manage-buttons a:hover {
+            background: linear-gradient(to right, #6a3093, #a044ff);
+            transform: translateY(-5px);
+        }
+
+        .logout-btn {
+            margin-top: 40px;
+            background: linear-gradient(to right, #ff6a00, #ee0979); /* orange to pink */
+            color: white;
+            padding: 15px 28px;
+            border: none;
+            border-radius: 12px;
+            font-size: 18px;
+            text-decoration: none;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+            transition: background 0.3s ease, transform 0.2s ease;
+        }
+
+        .logout-btn:hover {
+            background: linear-gradient(to right, #ff512f, #dd2476);
+            transform: translateY(-5px);
+        }
+
+        .icon {
+            width: 20px;
+            height: 20px;
+            vertical-align: middle;
+            margin-right: 8px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="dashboard">
+        <h1>Admin Dashboard</h1>
+
+        <!-- Display logged-in user's name -->
+        <p>Welcome, <strong th:text="${session.loggedInUser.username}">Admin</strong>!</p>
+        <p>Your role is: <strong>ADMIN</strong></p>
+
+        <div class="manage-buttons">
+            <!-- Links to manage destinations and users -->
+            <a th:href="@{/admin/manage-destinations}">
+                <img src="https://img.icons8.com/ios-filled/50/ffffff/place-marker.png" alt="Manage Destinations" class="icon"/> Manage Destinations
+            </a>
+            <a th:href="@{/admin/manage-users}">
+                <img src="https://img.icons8.com/ios-filled/50/ffffff/user-group-man-man.png" alt="Manage Users" class="icon"/> Manage Users
+            </a>
+        </div>
+
+        <div>
+            <!-- Logout button -->
+            <a href="/logout">Logout</a>
+
+            <div th:if="${param.logout}">
+                <p>You have successfully logged out.</p>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
